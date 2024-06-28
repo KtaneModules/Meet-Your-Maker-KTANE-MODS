@@ -7,37 +7,46 @@ using UnityEngine;
 using KModkit;
 using Rnd = UnityEngine.Random;
 using Math = ExMath;
+using UnityEngine.UI;
 
 public class MeetYourMaker : MonoBehaviour {
+    static int ModuleIdCounter = 1;
+    private KMBombInfo Bomb;
+    private KMAudio Audio;
+    private KMNeedyModule Needy;
+    int ModuleId;
+    private bool ModuleSolved;
 
-   private KMBombInfo Bomb;
-   private KMAudio Audio;
-   private KMNeedyModule Needy;
 
-   static int ModuleIdCounter = 1;
-   int ModuleId;
-   private bool ModuleSolved;
+    #region Buttons/Icons
+    [SerializeField]
+    private Image[] images;
+    private Image blankIcon;
+    private Button[] buttons;
+    private Sprite icon;
+    #endregion
+    void Awake () { //Avoid doing calculations in here regarding edgework. Just use this for setting up buttons for simplicity.
+        ModuleId = ModuleIdCounter++;
+        Bomb = GetComponent<KMBombInfo>();
+        Audio = GetComponent<KMAudio>();
+        Needy = GetComponent<KMNeedyModule>();
+        GetComponent<KMBombModule>().OnActivate += Activate;
+        Needy.OnNeedyActivation += OnNeedyActivation;
+        Needy.OnNeedyDeactivation += OnNeedyDeactivation;
+        Needy.OnTimerExpired += OnTimerExpired;
 
-   void Awake () { //Avoid doing calculations in here regarding edgework. Just use this for setting up buttons for simplicity.
-      ModuleId = ModuleIdCounter++;
-      Bomb = GetComponent<KMBombInfo>();
-      Audio = GetComponent<KMAudio>();
-      Needy = GetComponent<KMNeedyModule>();
-      GetComponent<KMBombModule>().OnActivate += Activate;
-      Needy.OnNeedyActivation += OnNeedyActivation;
-      Needy.OnNeedyDeactivation += OnNeedyDeactivation;
-      Needy.OnTimerExpired += OnTimerExpired;
-      /*
-      foreach (KMSelectable object in keypad) {
-          object.OnInteract += delegate () { keypadPress(object); return false; };
-      }
-      */
+        buttons = new Button[4];
+        for (int i = 1; i < 5; i++)
+        {
+            Debug.Log(i);
+            GameObject gameObject = transform.Find($"Button{i}").gameObject;
+            KMSelectable selectable = gameObject.GetComponent<KMSelectable>();
+            selectable.OnInteract += delegate () { ButtonPress(selectable); return false; };
+            buttons[i] = new Button(selectable, gameObject.GetComponent<TextMesh>());
+        }
+    }
 
-      //button.OnInteract += delegate () { buttonPress(); return false; };
-
-   }
-
-   void OnDestroy () { //Shit you need to do when the bomb ends
+    void OnDestroy () { //Shit you need to do when the bomb ends
       
    }
 
@@ -64,6 +73,11 @@ public class MeetYourMaker : MonoBehaviour {
    void Update () { //Shit that happens at any point after initialization
 
    }
+
+    private void ButtonPress(KMSelectable button)
+    {
+        Debug.Log($"{button} was pressed");
+    }
 
    void Strike () {
       GetComponent<KMBombModule>().HandleStrike();
