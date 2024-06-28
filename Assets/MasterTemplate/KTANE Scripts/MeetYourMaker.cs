@@ -17,8 +17,6 @@ public class MeetYourMaker : MonoBehaviour {
    static int ModuleIdCounter = 1;
    int ModuleId;
    private bool ModuleSolved;
-    [SerializeField]
-    private bool urMom;
 
    void Awake () { //Avoid doing calculations in here regarding edgework. Just use this for setting up buttons for simplicity.
       ModuleId = ModuleIdCounter++;
