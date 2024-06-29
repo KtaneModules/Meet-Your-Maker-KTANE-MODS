@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MakerModule : MonoBehaviour {
+public class MakerModule {
 
 	public string ModuleName { get; private set; }
     public string[] Creators { get; private set; }

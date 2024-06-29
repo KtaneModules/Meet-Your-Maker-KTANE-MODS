@@ -248,7 +248,7 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Letter Keys", new string[] { "Mage of R. Jelly" }));
         modules.Add(new MakerModule("Light Cycle", new string[] { "Timwi", "Rexkix" }));
         modules.Add(new MakerModule("Lightspeed", new string[] { "Royal_Flu$h" }));
-        modules.Add(new MakerModule("Lion’s Share", new string[] { "Timwi" }));
+        modules.Add(new MakerModule("Lion's Share", new string[] { "Timwi" }));
         modules.Add(new MakerModule("Listening", new string[] { "Perky" }));
         modules.Add(new MakerModule("Logic", new string[] { "SL7205" }));
         modules.Add(new MakerModule("Logic Gates", new string[] { "Groover", "Maca" }));
@@ -265,7 +265,6 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Mastermind Simple", new string[] { "Eotall" }));
         modules.Add(new MakerModule("Maze Scrambler", new string[] { "McNiko67" }));
         modules.Add(new MakerModule("Mazematics", new string[] { "Skyeward" }));
-        modules.Add(new MakerModule("Maze³", new string[] { "TheThirdMan", "Pruz" }));
         modules.Add(new MakerModule("Mega Man 2", new string[] { "Goofy" }));
         modules.Add(new MakerModule("Melody Sequencer", new string[] { "Goofy" }));
         modules.Add(new MakerModule("Micro-Modules", new string[] { "Kritzy" }));
@@ -327,8 +326,8 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Rock-Paper-Scissors-Lizard-Spock", new string[] { "Timwi" }));
         modules.Add(new MakerModule("Roman Art", new string[] { "eXish" }));
         modules.Add(new MakerModule("Round Keypad", new string[] { "Hexicube" }));
-        modules.Add(new MakerModule("Rubik’s Clock", new string[] { "Groover" }));
-        modules.Add(new MakerModule("Rubik’s Cube", new string[] { "Timwi, Freelancer1025" }));
+        modules.Add(new MakerModule("Rubik's Clock", new string[] { "Groover" }));
+        modules.Add(new MakerModule("Rubik's Cube", new string[] { "Timwi, Freelancer1025" }));
         modules.Add(new MakerModule("S.E.T.", new string[] { "Timwi", "Zawu" }));
         modules.Add(new MakerModule("Safety Safe", new string[] { "Hexicube" }));
         modules.Add(new MakerModule("Schlag den Bomb", new string[] { "JerryEris" }));
@@ -352,8 +351,8 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Simon Spins", new string[] { "Timwi" }));
         modules.Add(new MakerModule("Simon States", new string[] { "Hexicube" }));
         modules.Add(new MakerModule("Simon Stops", new string[] { "JerryEris" }));
-        modules.Add(new MakerModule("Simon’s Stages", new string[] { "Royal_Flu$h" }));
-        modules.Add(new MakerModule("Simon’s Star", new string[] { "Royal_Flu$h" }));
+        modules.Add(new MakerModule("Simon's Stages", new string[] { "Royal_Flu$h" }));
+        modules.Add(new MakerModule("Simon's Star", new string[] { "Royal_Flu$h" }));
         modules.Add(new MakerModule("Sink", new string[] { "McNiko67" }));
         modules.Add(new MakerModule("Skewed Slots", new string[] { "samfundev" }));
         modules.Add(new MakerModule("Skinny Wires", new string[] { "Royal_Flu$h" }));
@@ -394,7 +393,7 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("The Digit", new string[] { "Marksam", "tandyCake" }));
         modules.Add(new MakerModule("The Festive Jukebox", new string[] { "Royal_Flu$h" }));
         modules.Add(new MakerModule("The Gamepad", new string[] {"samfundev", "theFIZZYnator" }));
-        modules.Add(new MakerModule("The Giant’s Drink", new string[] { "TheThirdMan" }));
+        modules.Add(new MakerModule("The Giant's Drink", new string[] { "TheThirdMan" }));
         modules.Add(new MakerModule("The Hangover", new string[] { "Royal_Flu$h" }));
         modules.Add(new MakerModule("The Hexabutton", new string[] { "EpicToast", "ryaninator81" }));
         modules.Add(new MakerModule("The Hypercube", new string[] { "Timwi" }));
