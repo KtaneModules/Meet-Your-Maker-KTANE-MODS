@@ -88,7 +88,6 @@ public class MeetYourMaker : MonoBehaviour {
                 allCreators.AddRange(module.Creators);
                 allCreators = allCreators.Distinct().ToList();
             }
-
         }
    }
 
@@ -130,7 +129,7 @@ public class MeetYourMaker : MonoBehaviour {
             buttons[i].TextMesh.text = answers[i];
         }
 
-        Debug.Log($"Chose {selectedModule.ModuleName}. Correct answer is {correctAnswer}");
+        Debug.Log($"Module is {selectedModule.ModuleName}. Correct answer is {correctAnswer}");
     }
 
     private List<string> RandomizeList(List<string> orgininal)
@@ -225,7 +224,7 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("DetoNATO", new string[] { "DVD", "Kusane Hexaku" }));
         modules.Add(new MakerModule("Digit String", new string[] { "JerryEris" }));
         modules.Add(new MakerModule("Digital Cipher", new string[] { "Goofy" }));
-        modules.Add(new MakerModule("Digital Root", new string[] { "red031000, CyanLights" }));
+        modules.Add(new MakerModule("Digital Root", new string[] { "red031000", "CyanLights" }));
         modules.Add(new MakerModule("Discolored Squares", new string[] { "Timwi" }));
         modules.Add(new MakerModule("Divided Squares", new string[] { "Timwi" }));
         modules.Add(new MakerModule("Dominoes", new string[] { "Gee", "Blananas2" }));
@@ -266,7 +265,7 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Graphic Memory", new string[] { "TheThirdMan" }));
         modules.Add(new MakerModule("Greek Calculus", new string[] { "billy_bao" }));
         modules.Add(new MakerModule("Grid Matching", new string[] { "Windesign" }));
-        modules.Add(new MakerModule("Gridlock", new string[] { "Timwi, Elias" }));
+        modules.Add(new MakerModule("Gridlock", new string[] { "Timwi", "Elias" }));
         modules.Add(new MakerModule("Grocery Store", new string[] { "TheRealWitch" }));
         modules.Add(new MakerModule("Gryphons", new string[] { "JerryEris" }));
         modules.Add(new MakerModule("Guitar Chords", new string[] { "Royal_Flu$h" }));
@@ -286,7 +285,7 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Know Your Way", new string[] { "Blananas2", "Joostoos" }));
         modules.Add(new MakerModule("Krazy Talk", new string[] { "EpicToast" }));
         modules.Add(new MakerModule("Kudosudoku", new string[] { "Timwi" }));
-        modules.Add(new MakerModule("Lasers", new string[] { "Riverbui, Timwi, Elias" }));
+        modules.Add(new MakerModule("Lasers", new string[] { "Riverbui", "Timwi", "Elias" }));
         modules.Add(new MakerModule("Laundry", new string[] { "Flamanis", "Hendruid", "AcrylicStain" }));
         modules.Add(new MakerModule("LED Encryption", new string[] { "Virepri" }));
         modules.Add(new MakerModule("LED Grid", new string[] { "Royal_Flu$h" }));
@@ -375,7 +374,7 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Roman Art", new string[] { "eXish" }));
         modules.Add(new MakerModule("Round Keypad", new string[] { "Hexicube" }));
         modules.Add(new MakerModule("Rubik's Clock", new string[] { "Groover" }));
-        modules.Add(new MakerModule("Rubik's Cube", new string[] { "Timwi, Freelancer1025" }));
+        modules.Add(new MakerModule("Rubik's Cube", new string[] { "Timwi", "Freelancer1025" }));
         modules.Add(new MakerModule("S.E.T.", new string[] { "Timwi", "Zawu" }));
         modules.Add(new MakerModule("Safety Safe", new string[] { "Hexicube" }));
         modules.Add(new MakerModule("Schlag den Bomb", new string[] { "JerryEris" }));
@@ -392,8 +391,8 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Simon Scrambles", new string[] { "noahcoolboy" }));
         modules.Add(new MakerModule("Simon Screams", new string[] { "Timwi" }));
         modules.Add(new MakerModule("Simon Sends", new string[] { "Timwi" }));
-        modules.Add(new MakerModule("Simon Shrieks", new string[] { "Timwi, IFBeetle" }));
-        modules.Add(new MakerModule("Simon Sings", new string[] { "Timwi, MarioXTurn" }));
+        modules.Add(new MakerModule("Simon Shrieks", new string[] { "Timwi", "IFBeetle" }));
+        modules.Add(new MakerModule("Simon Sings", new string[] { "Timwi", "MarioXTurn" }));
         modules.Add(new MakerModule("Simon Sounds", new string[] { "Goofy" }));
         modules.Add(new MakerModule("Simon Speaks", new string[] { "Timwi" }));
         modules.Add(new MakerModule("Simon Spins", new string[] { "Timwi" }));
@@ -434,7 +433,7 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Terraria Quiz", new string[] { "LeGeND", "TasThiluna" }));
         modules.Add(new MakerModule("Text Field", new string[] { "SL7205" }));
         modules.Add(new MakerModule("The Bulb", new string[] { "Timwi" }));
-        modules.Add(new MakerModule("The Clock", new string[] { "Timwi, TheAuthorOfOZ" }));
+        modules.Add(new MakerModule("The Clock", new string[] { "Timwi", "TheAuthorOfOZ" }));
         modules.Add(new MakerModule("The Code", new string[] { "LeGeND" }));
         modules.Add(new MakerModule("The Crystal Maze", new string[] { "Royal_Flu$h" }));
         modules.Add(new MakerModule("The Cube", new string[] { "Royal_Flu$h" }));
@@ -471,7 +470,7 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("The Wire", new string[] {"Royal_Flu$h" }));
         modules.Add(new MakerModule("The Witness", new string[] { "VFlyer", "bmo22xd" }));
         modules.Add(new MakerModule("Third Base", new string[] { "Asimir" }));
-        modules.Add(new MakerModule("Tic Tac Toe", new string[] { "Timwi, Moon" }));
+        modules.Add(new MakerModule("Tic Tac Toe", new string[] { "Timwi", "Moon" }));
         modules.Add(new MakerModule("Timezone", new string[] { "federan" }));
         modules.Add(new MakerModule("Timing is Everything", new string[] { "Blananas2", "TheRealWitch" }));
         modules.Add(new MakerModule("Triangle Buttons", new string[] { "hockeygoalie78", "Pruz" }));
@@ -501,11 +500,31 @@ public class MeetYourMaker : MonoBehaviour {
     }
 
 #pragma warning disable 414
-   private readonly string TwitchHelpMessage = @"Use !{0} to do something.";
+   private readonly string TwitchHelpMessage = @"Use !{0} followed by '1,2,3, or 4' to select one of the buttons from top to bottom.";
 #pragma warning restore 414
 
    IEnumerator ProcessTwitchCommand (string Command) {
-      yield return null;
+        Command = Command.ToUpper().Trim();
+        yield return null;
+        switch (Command)
+        {
+            case "1":
+                buttons[0].Selectable.OnInteract();
+                yield break;
+            case "2":
+                buttons[1].Selectable.OnInteract();
+                yield break;
+            case "3":
+                buttons[2].Selectable.OnInteract();
+                yield break;
+            case "4":
+                buttons[3].Selectable.OnInteract();
+                yield break;
+            default:
+                yield return string.Format("sendtochaterror Invalid command");
+                yield break;
+        }
+
    }
 
    void TwitchHandleForcedSolve () { //Void so that autosolvers go to it first instead of potentially striking due to running out of time.
