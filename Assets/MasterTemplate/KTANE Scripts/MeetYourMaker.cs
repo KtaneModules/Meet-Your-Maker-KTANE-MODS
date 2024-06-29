@@ -8,6 +8,7 @@ using KModkit;
 using Rnd = UnityEngine.Random;
 using Math = ExMath;
 using UnityEngine.UI;
+using Newtonsoft.Json.Linq;
 
 public class MeetYourMaker : MonoBehaviour {
     static int ModuleIdCounter = 1;
@@ -15,22 +16,23 @@ public class MeetYourMaker : MonoBehaviour {
     private KMAudio Audio;
     private KMNeedyModule Needy;
     int ModuleId;
-    private bool ModuleSolved;
+    private bool needyActive;
     private static JsonReader jsonData;
 
+    private List<string> allCreators;
     private List<MakerModule> modules;
-
+    string correctAnswer;
     #region Buttons/Icons
     [SerializeField]
     private Sprite[] preloadedIcons;
     [SerializeField]
     private Sprite blankIcon;
-    [SerializeField]
-    private Sprite icon;
+    private SpriteRenderer icon;
     private Button[] buttons;
     #endregion
     void Awake () { //Avoid doing calculations in here regarding edgework. Just use this for setting up buttons for simplicity.
         ModuleId = ModuleIdCounter++;
+        icon = transform.Find("Icon").GetComponent<SpriteRenderer>();
         Bomb = GetComponent<KMBombInfo>();
         Audio = GetComponent<KMAudio>();
         Needy = GetComponent<KMNeedyModule>();
@@ -42,61 +44,107 @@ public class MeetYourMaker : MonoBehaviour {
         for (int i = 1; i < 5; i++)
         {
             int dummy = i;
-            Debug.Log(dummy);
             Transform transform = this.transform.Find($"Button {dummy}");
-            Debug.Log(transform);
             KMSelectable selectable = transform.GetComponent<KMSelectable>();
-            Debug.Log(selectable);
             buttons[dummy - 1] = new Button(selectable, transform.Find("Text").GetComponent<TextMesh>());
             selectable.OnInteract += delegate () { ButtonPress(buttons[dummy - 1]); return false; };
         }
     }
 
-    void OnDestroy () { //Shit you need to do when the bomb ends
-      
-   }
-
-   void Activate () { //Shit that should happen when the bomb arrives (factory)/Lights turn on
-
-   }
-
    protected void OnNeedyActivation () { //Shit that happens when a needy turns on.
-
+        needyActive = true;
+        GenrateQuestion();
    }
 
-   protected void OnNeedyDeactivation () { //Shit that happens when a needy turns off.
-      Needy.OnPass();
+   protected void OnNeedyDeactivation() { //Shit that happens when a needy turns off.
+        needyActive = false;
+        ResetModule();
+        Needy.OnPass();
    }
+
+    private void ResetModule()
+    {
+        icon.sprite = blankIcon;
+        foreach (Button button in buttons)
+        {
+            button.TextMesh.text = "";
+        }
+    }
 
    protected void OnTimerExpired () { //Shit that happens when a needy turns off due to running out of time.
-
+        Strike("Timer ran out");
    }
 
    void Start () { //Shit that you calculate, usually a majority if not all of the module
+        ResetModule();
         modules = new List<MakerModule>();
         //if the json failed to load, use the data from the appendix
         if (!JsonReader.Success)
         {
             Debug.Log("Unable to connect to the repo, using preloaded modules");
             LoadPreloadedModules();
+            allCreators = new List<string>();
+            foreach (MakerModule module in modules) {
+                allCreators.AddRange(module.Creators);
+                allCreators = allCreators.Distinct().ToList();
+            }
 
         }
-      Needy.SetResetDelayTime(30f, 50f);
-   }
-
-   void Update () { //Shit that happens at any point after initialization
-
    }
 
     private void ButtonPress(Button button)
     {
-        Debug.Log($"{button.Selectable.name} was pressed");
+        if (!needyActive) return;
+        if (button.TextMesh.text != correctAnswer)
+        {
+            Strike($"You pressed {button.TextMesh.text}.");
+        }
+
+        OnNeedyDeactivation();
     }
 
-   void Strike () {
-      GetComponent<KMBombModule>().HandleStrike();
+    void Solve()
+    {
+
+    }
+
+   void Strike (string message) 
+   {
+      Debug.Log($"Strike! {message}");
+      GetComponent<KMNeedyModule>().HandleStrike();
    }
 
+    private void GenrateQuestion()
+    {
+        allCreators = RandomizeList(allCreators);
+        MakerModule selectedModule = modules.PickRandom();
+        icon.sprite = selectedModule.Icon;
+        correctAnswer = selectedModule.Creators.PickRandom();
+        List<string> answers = new List<string>();
+        answers.Add(correctAnswer);
+        answers.AddRange(allCreators.Where(creator => !selectedModule.Creators.Contains(creator)).Take(3));
+        answers = RandomizeList(answers);
+
+        for(int i = 0; i < 4; i++)
+        {
+            buttons[i].TextMesh.text = answers[i];
+        }
+
+        Debug.Log($"Chose {selectedModule.ModuleName}. Correct answer is {correctAnswer}");
+    }
+
+    private List<string> RandomizeList(List<string> orgininal)
+    {
+        List<string> newList = new List<string>();
+        List<string> oldList = new List<string>(orgininal);
+        while (oldList.Count > 0) 
+        {
+            string result = oldList.PickRandom();
+            oldList.Remove(result);
+            newList.Add(result);
+        }
+        return newList;
+    }
     private void LoadPreloadedModules()
     {
         MakerModule.PreloadedIcons = preloadedIcons;
@@ -450,11 +498,6 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Yahtzee", new string[] { "Timwi" }));
         modules.Add(new MakerModule("Zoni", new string[] { "LeGeND" }));
         modules.Add(new MakerModule("Zoo", new string[] { "Timwi" }));
-    }
-
-    private Sprite FindIcon(string name)
-    {
-        return preloadedIcons.First(icon => icon.name == name);
     }
 
 #pragma warning disable 414
