@@ -64,6 +64,11 @@ public class MeetYourMaker : MonoBehaviour {
         }
     }
 
+    private void Logging(string message)
+    {
+        Debug.Log($"[Meet Your Maker #{ModuleId}] {message}");
+    }
+
    protected void OnTimerExpired () { //Shit that happens when a needy turns off due to running out of time.
         Strike("Timer ran out");
    }
@@ -74,7 +79,7 @@ public class MeetYourMaker : MonoBehaviour {
         //if the json failed to load, use the data from the appendix
         if (!JsonReader.Success)
         {
-            Debug.Log("Unable to connect to the repo, using preloaded modules");
+            Logging("Unable to connect to the repo, using preloaded modules");
             LoadPreloadedModules();
             allCreators = new List<string>();
             foreach (MakerModule module in modules) {
@@ -102,7 +107,7 @@ public class MeetYourMaker : MonoBehaviour {
 
    void Strike (string message) 
    {
-      Debug.Log($"Strike! {message}");
+      Logging($"Strike! {message}");
       GetComponent<KMNeedyModule>().HandleStrike();
    }
 
@@ -122,7 +127,7 @@ public class MeetYourMaker : MonoBehaviour {
             buttons[i].TextMesh.text = answers[i];
         }
 
-        Debug.Log($"Module is {selectedModule.ModuleName}. Correct answer is {correctAnswer}");
+        Logging($"Module is {selectedModule.ModuleName}. Correct answer is {correctAnswer}");
     }
 
     private List<string> RandomizeList(List<string> orgininal)
