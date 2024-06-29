@@ -1,14 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
-using KModkit;
-using Rnd = UnityEngine.Random;
-using Math = ExMath;
-using UnityEngine.UI;
-using Newtonsoft.Json.Linq;
 
 public class MeetYourMaker : MonoBehaviour {
     static int ModuleIdCounter = 1;
@@ -89,7 +82,7 @@ public class MeetYourMaker : MonoBehaviour {
                 allCreators = allCreators.Distinct().ToList();
             }
         }
-   }
+    }
 
     private void ButtonPress(Button button)
     {
