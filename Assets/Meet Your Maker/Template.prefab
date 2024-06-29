@@ -351,7 +351,7 @@ Transform:
   m_GameObject: {fileID: 1081786975530508}
   m_LocalRotation: {x: 1, y: -0, z: -0, w: -0.00000008940697}
   m_LocalPosition: {x: 0, y: -0, z: 0.006}
-  m_LocalScale: {x: 0.00028719503, y: 0.0011995598, z: 5.6565175}
+  m_LocalScale: {x: 0.00024460853, y: 0.001021684, z: 4.8177457}
   m_Children: []
   m_Father: {fileID: 4129326106771712}
   m_RootOrder: 0
@@ -481,7 +481,7 @@ Transform:
   m_GameObject: {fileID: 1631013177832256}
   m_LocalRotation: {x: 1, y: -0, z: -0, w: -0.00000008940697}
   m_LocalPosition: {x: 0, y: -0, z: 0.006}
-  m_LocalScale: {x: 0.00028719503, y: 0.0011995598, z: 5.6565175}
+  m_LocalScale: {x: 0.00024460853, y: 0.001021684, z: 4.8177457}
   m_Children: []
   m_Father: {fileID: 4871273886940010}
   m_RootOrder: 0
@@ -520,7 +520,7 @@ Transform:
   m_GameObject: {fileID: 1086081318854494}
   m_LocalRotation: {x: 1, y: -0, z: -0, w: -0.00000008940697}
   m_LocalPosition: {x: 0, y: -0, z: 0.006}
-  m_LocalScale: {x: 0.00028719503, y: 0.0011995598, z: 5.6565175}
+  m_LocalScale: {x: 0.00024460853, y: 0.001021684, z: 4.8177457}
   m_Children: []
   m_Father: {fileID: 4194784987131170}
   m_RootOrder: 0
@@ -533,7 +533,7 @@ Transform:
   m_GameObject: {fileID: 1375468042065144}
   m_LocalRotation: {x: 1, y: -0, z: -0, w: -0.00000008940697}
   m_LocalPosition: {x: 0, y: -0, z: 0.006}
-  m_LocalScale: {x: 0.00028719503, y: 0.0011995598, z: 5.6565175}
+  m_LocalScale: {x: 0.00024460853, y: 0.001021684, z: 4.8177457}
   m_Children: []
   m_Father: {fileID: 4791278241663598}
   m_RootOrder: 0
@@ -1127,7 +1127,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1086081318854494}
-  m_Text: Hello World
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -1148,7 +1148,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1375468042065144}
-  m_Text: Hello World
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -1169,7 +1169,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1081786975530508}
-  m_Text: Hello World
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -1190,7 +1190,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1631013177832256}
-  m_Text: Hello World
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -1663,8 +1663,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: cca1c437e2c98a049bda7d35c47a3584, type: 3}
   - {fileID: 21300000, guid: 7e43e79bbfd0b5b4c89220459b475f8d, type: 3}
   - {fileID: 21300000, guid: 75490d4ad66297141a3638d0345bd83a, type: 3}
-  blankIcon: {fileID: 0}
-  icon: {fileID: 0}
+  blankIcon: {fileID: 21300000, guid: bbc9d40a8f065e943b7677793392450d, type: 3}
 --- !u!114 &114454383462897410
 MonoBehaviour:
   m_ObjectHideFlags: 1
