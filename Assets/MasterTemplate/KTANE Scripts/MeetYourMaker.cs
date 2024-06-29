@@ -30,7 +30,6 @@ public class MeetYourMaker : MonoBehaviour {
         Bomb = GetComponent<KMBombInfo>();
         Audio = GetComponent<KMAudio>();
         Needy = GetComponent<KMNeedyModule>();
-        GetComponent<KMBombModule>().OnActivate += Activate;
         Needy.OnNeedyActivation += OnNeedyActivation;
         Needy.OnNeedyDeactivation += OnNeedyDeactivation;
         Needy.OnTimerExpired += OnTimerExpired;
@@ -38,11 +37,14 @@ public class MeetYourMaker : MonoBehaviour {
         buttons = new Button[4];
         for (int i = 1; i < 5; i++)
         {
-            Debug.Log(i);
-            GameObject gameObject = transform.Find($"Button{i}").gameObject;
-            KMSelectable selectable = gameObject.GetComponent<KMSelectable>();
-            selectable.OnInteract += delegate () { ButtonPress(selectable); return false; };
-            buttons[i] = new Button(selectable, gameObject.GetComponent<TextMesh>());
+            int dummy = i;
+            Debug.Log(dummy);
+            Transform transform = this.transform.Find($"Button {dummy}");
+            Debug.Log(transform);
+            KMSelectable selectable = transform.GetComponent<KMSelectable>();
+            Debug.Log(selectable);
+            buttons[dummy - 1] = new Button(selectable, transform.Find("Text").GetComponent<TextMesh>());
+            selectable.OnInteract += delegate () { ButtonPress(buttons[dummy - 1]); return false; };
         }
     }
 
@@ -74,9 +76,9 @@ public class MeetYourMaker : MonoBehaviour {
 
    }
 
-    private void ButtonPress(KMSelectable button)
+    private void ButtonPress(Button button)
     {
-        Debug.Log($"{button} was pressed");
+        Debug.Log($"{button.Selectable.name} was pressed");
     }
 
    void Strike () {
