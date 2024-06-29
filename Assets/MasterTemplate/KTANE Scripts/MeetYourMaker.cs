@@ -45,8 +45,8 @@ public class MeetYourMaker : MonoBehaviour {
     }
 
    protected void OnNeedyActivation () { //Shit that happens when a needy turns on.
-        needyActive = true;
         GenrateQuestion();
+        needyActive = true;
    }
 
    protected void OnNeedyDeactivation() { //Shit that happens when a needy turns off.
@@ -98,11 +98,6 @@ public class MeetYourMaker : MonoBehaviour {
         }
 
         OnNeedyDeactivation();
-    }
-
-    void Solve()
-    {
-
     }
 
    void Strike (string message) 
@@ -530,6 +525,11 @@ public class MeetYourMaker : MonoBehaviour {
    }
 
    IEnumerator HandleAutosolver () {
-      yield return null;
-   }
+        while (true)
+        {
+            while(!needyActive) yield return null;
+            Button correctButton = buttons.First(button => button.TextMesh.text == correctAnswer);
+            correctButton.Selectable.OnInteract();
+        }
+    }
 }
