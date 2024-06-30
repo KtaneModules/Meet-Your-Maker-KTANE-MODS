@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 
-public class JsonReader {
+public class JsonReader : MonoBehaviour {
 
     public static bool Success;
     public static bool LoadingDone;
@@ -18,12 +18,14 @@ public class JsonReader {
     private const int maxJsonLoadTime = 10; //the max time allowed to laod the json
     private const int maxTime = 25; //the time allowed to load as many modules as possible
     public static List<MakerModule> LoadedModules;
-    private static Stopwatch stopWatch = new Stopwatch();
+    private Stopwatch stopWatch = new Stopwatch();
     private static string[] bannedCreators = new string[]{ "Anonymous", "and many contributors" };
+    private int ModuleId;
 
 
-    public static IEnumerator LoadData()
+    public IEnumerator LoadData(int moduleId)
     {
+        this.ModuleId = moduleId;
         //Stores the raw text of the grabbed json.
         string raw = "";
         UnityWebRequest request = UnityWebRequest.Get("https://ktane.timwi.de/json/raw");
@@ -101,7 +103,7 @@ public class JsonReader {
         StopLoading();
     }
 
-    private static void StopLoading()
+    private void StopLoading()
     {
         Loading = false;
         LoadingDone = false;
@@ -120,8 +122,17 @@ public class JsonReader {
         return newList;
     }
 
-    private static void UnityEngineDebug(string message)
+    private void UnityEngineDebug(string message)
     {
-        UnityEngine.Debug.Log(message);
+        UnityEngine.Debug.Log($"[Meet Your Maker #{ModuleId}] {message}");
     }
+
+    public static void Reset()
+    {
+        Success = false;
+        LoadingDone = false;
+        LoadedModules = new List<MakerModule>();
+    }
+
+
 }

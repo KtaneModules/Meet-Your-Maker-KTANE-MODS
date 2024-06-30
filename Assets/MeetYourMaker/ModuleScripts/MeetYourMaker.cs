@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +7,6 @@ using UnityEngine.UI;
 
 public class MeetYourMaker : MonoBehaviour {
    static int ModuleIdCounter = 1;
-   private KMBombInfo Bomb;
-   private KMAudio Audio;
    private KMNeedyModule Needy;
    int ModuleId;
    private bool needyActive;
@@ -24,20 +23,19 @@ public class MeetYourMaker : MonoBehaviour {
    private Sprite blankIcon;
    private SpriteRenderer icon;
    private Button[] buttons;
+    private JsonReader jsonReader;
    #endregion
    void Awake () { //Avoid doing calculations in here regarding edgework. Just use this for setting up buttons for simplicity.
        ModuleId = ModuleIdCounter++;
        icon = transform.Find("Icon").GetComponent<SpriteRenderer>();
-       Bomb = GetComponent<KMBombInfo>();
-       Audio = GetComponent<KMAudio>();
        Needy = GetComponent<KMNeedyModule>();
        warningGameObject = transform.Find("Warning").gameObject;
-        warningGameObject.SetActive(false);
+       warningGameObject.SetActive(false);
        loadingGameObject = transform.Find("Loading Text").gameObject;
        Needy.OnNeedyActivation += OnNeedyActivation;
        Needy.OnNeedyDeactivation += OnNeedyDeactivation;
        Needy.OnTimerExpired += OnTimerExpired;
-
+        jsonReader = GetComponent<JsonReader>();
         buttons = new Button[4];
        for (int i = 1; i < 5; i++)
        {
@@ -83,7 +81,7 @@ public class MeetYourMaker : MonoBehaviour {
             //if not already loading, load
             if (!JsonReader.Loading)
             {
-                yield return JsonReader.LoadData();
+                yield return jsonReader.LoadData(ModuleId);
             }
 
             //if aleady loading, wait until loading is done
@@ -122,12 +120,12 @@ public class MeetYourMaker : MonoBehaviour {
     }
     private void ButtonPress(Button button)
     {
+        button.Selectable.AddInteractionPunch(1f);
         if (!needyActive) return;
         if (button.Text.text != correctAnswer)
         {
             Strike($"You pressed {button.Text.text}.");
         }
-
         OnNeedyDeactivation();
     }
    void Strike (string message) 
@@ -517,6 +515,11 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Yahtzee", new string[] { "Timwi" }));
         modules.Add(new MakerModule("Zoni", new string[] { "LeGeND" }));
         modules.Add(new MakerModule("Zoo", new string[] { "Timwi" }));
+    }
+
+    public void OnDestory()
+    {
+        JsonReader.Reset();
     }
 
 #pragma warning disable 414

@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 114999819537674364}
   - component: {fileID: 114671339300024820}
   - component: {fileID: 114336702930892976}
+  - component: {fileID: 114264295620969436}
   m_Layer: 0
   m_Name: Meet Your Maker
   m_TagString: Untagged
@@ -1205,6 +1206,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - KT/Outline
+--- !u!114 &114264295620969436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1527451766784530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3819500027eef4bb84d0fdd9be086d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114273773552432994
 MonoBehaviour:
   m_ObjectHideFlags: 1
