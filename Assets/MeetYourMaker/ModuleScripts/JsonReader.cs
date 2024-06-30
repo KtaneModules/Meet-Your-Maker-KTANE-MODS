@@ -19,7 +19,7 @@ public class JsonReader {
     private const int maxTime = 25; //the time allowed to load as many modules as possible
     public static List<MakerModule> LoadedModules;
     private static Stopwatch stopWatch = new Stopwatch();
-    private static string[] bannedCreators = new string[]{ "Anonymous" };
+    private static string[] bannedCreators = new string[]{ "Anonymous", "and many contributors" };
 
 
     public static IEnumerator LoadData()
@@ -52,7 +52,7 @@ public class JsonReader {
 
             //Turns the raw JSON into an instance of the container class, which contains a List of Dictionaries.
             List<KtaneModule> modData = RepoJSONParser.ParseRaw(raw);
-            modData = RandomizeList(modData).ToList();
+            modData = RandomizeList(modData);
             LoadedModules = new List<MakerModule>();
 
             int count = 0;
@@ -92,7 +92,6 @@ public class JsonReader {
 
                 if (stopWatch.Elapsed.TotalSeconds >= maxTime)
                 {
-                    UnityEngineDebug($"Loaded {count} modules");
                     break;
                 }
             }
