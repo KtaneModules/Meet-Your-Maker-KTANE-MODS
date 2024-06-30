@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ public class MeetYourMaker : MonoBehaviour {
    private List<MakerModule> modules;
    private string correctAnswer;
    private GameObject loadingGameObject;
+    private GameObject warningGameObject;
    #region Buttons/Icons
    [SerializeField]
    private Sprite[] preloadedIcons;
@@ -30,6 +32,8 @@ public class MeetYourMaker : MonoBehaviour {
        Bomb = GetComponent<KMBombInfo>();
        Audio = GetComponent<KMAudio>();
        Needy = GetComponent<KMNeedyModule>();
+       warningGameObject = transform.Find("Warning").gameObject;
+        warningGameObject.SetActive(false);
        loadingGameObject = transform.Find("Loading Text").gameObject;
        Needy.OnNeedyActivation += OnNeedyActivation;
        Needy.OnNeedyDeactivation += OnNeedyDeactivation;
@@ -59,7 +63,7 @@ public class MeetYourMaker : MonoBehaviour {
        icon.sprite = blankIcon;
        foreach (Button button in buttons)
        {
-           button.TextMesh.text = "";
+            button.ChangeText("");
        }
    }
    private void Logging(string message)
@@ -68,6 +72,7 @@ public class MeetYourMaker : MonoBehaviour {
    }
    protected void OnTimerExpired () { //Shit that happens when a needy turns off due to running out of time.
         Strike("Timer ran out");
+        ResetModule();
    }
 
    IEnumerator Start () { //Shit that you calculate, usually a majority if not all of the module
@@ -79,7 +84,7 @@ public class MeetYourMaker : MonoBehaviour {
             //if not already loading, load
             if (!JsonReader.Loading)
             {
-                yield return JsonReader.LoadData(icon);
+                yield return JsonReader.LoadData();
             }
 
             //if aleady loading, wait until loading is done
@@ -97,10 +102,12 @@ public class MeetYourMaker : MonoBehaviour {
         {
             Logging("Unable to connect to the repo, using preloaded modules");
             LoadPreloadedModules();
+            warningGameObject.SetActive(true);
         }
         else
         {
-
+            modules = JsonReader.LoadedModules;
+            Logging($"Loaded {modules.Count} modules");
         }
 
         loadingGameObject.gameObject.SetActive(false);
@@ -110,13 +117,15 @@ public class MeetYourMaker : MonoBehaviour {
             allCreators.AddRange(module.Creators);
             allCreators = allCreators.Distinct().ToList();
         }
+
+        //longest name: thestorebrandslimshady
     }
     private void ButtonPress(Button button)
     {
         if (!needyActive) return;
-        if (button.TextMesh.text != correctAnswer)
+        if (button.Text != correctAnswer)
         {
-            Strike($"You pressed {button.TextMesh.text}.");
+            Strike($"You pressed {button.Text}.");
         }
 
         OnNeedyDeactivation();
@@ -139,7 +148,7 @@ public class MeetYourMaker : MonoBehaviour {
 
         for(int i = 0; i < 4; i++)
         {
-            buttons[i].TextMesh.text = answers[i];
+            buttons[i].ChangeText(answers[i]);
         }
 
         Logging($"Module is {selectedModule.ModuleName}. Correct answer is {correctAnswer}");
@@ -546,7 +555,7 @@ public class MeetYourMaker : MonoBehaviour {
         while (true)
         {
             while(!needyActive) yield return null;
-            Button correctButton = buttons.First(button => button.TextMesh.text == correctAnswer);
+            Button correctButton = buttons.First(button => button.Text == correctAnswer);
             correctButton.Selectable.OnInteract();
         }
     }

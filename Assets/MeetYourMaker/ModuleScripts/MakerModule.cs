@@ -9,16 +9,12 @@ public class MakerModule {
     public string[] Creators { get; private set; }
 	public Sprite Icon { get; private set; }
     public static Sprite[] PreloadedIcons;
-    public static bool UsePreloadedIcons;
 
     public MakerModule(string name, string[] creators)
     {
         this.ModuleName = name;
         this.Creators = creators;
-        if (UsePreloadedIcons)
-        {
-            Icon = PreloadedIcons.First(sprite => sprite.name == name);
-        }
+        Icon = PreloadedIcons.First(sprite => sprite.name == name);
     }
 
     public MakerModule(string name, string[] creators, Sprite icon) {
