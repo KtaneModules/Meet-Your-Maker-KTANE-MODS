@@ -1,0 +1,10 @@
+{
+  "name": "MeetYourMaker-Editor",
+  "references": [
+    "MeetYourMaker"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": []
+}

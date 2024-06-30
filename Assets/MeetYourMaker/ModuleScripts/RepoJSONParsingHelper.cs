@@ -58,9 +58,9 @@ public class Contributors
     [JsonProperty("Twitch Plays")]
     public List<string> TwitchPlays { get; set; }
     /// <returns>All of the people who contributed to the module in one list.</returns>
-    public List<string> GetAllContributors()
+    public List<string> GetContributors()
     {
-        return new[] { Audio, Developer, Idea, Maintainer, Manual, Manualgraphics, Modeling, TwitchPlays }
+        return new[] { Developer, Manual }
                         .Where(x => x != null)
                         .SelectMany(x => x).ToList();
     }

@@ -108,6 +108,7 @@ public class MeetYourMaker : MonoBehaviour {
         {
             modules = JsonReader.LoadedModules;
             Logging($"Loaded {modules.Count} modules");
+            Logging(string.Join(", ", modules.Select(m => m.ModuleName).ToArray()));
         }
 
         loadingGameObject.gameObject.SetActive(false);
@@ -508,7 +509,7 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Waste Management", new string[] { "red031000", "Inova", "AppleSlice" }));
         modules.Add(new MakerModule("Wavetapping", new string[] { "KingSlendy", "Lumbud84" }));
         modules.Add(new MakerModule("Web Design", new string[] { "SL7205", "theFIZZYnator" }));
-        modules.Add(new MakerModule("Westeros", new string[] { }));
+        modules.Add(new MakerModule("Westeros", new string[] { "Royal_Flu$h" }));
         modules.Add(new MakerModule("Wire Placement", new string[] { "Royal_Flu$h" }));
         modules.Add(new MakerModule("Wire Spaghetti", new string[] { "Royal_Flu$h" }));
         modules.Add(new MakerModule("Word Search", new string[] { "Timwi", "TheAuthorOfOZ" }));

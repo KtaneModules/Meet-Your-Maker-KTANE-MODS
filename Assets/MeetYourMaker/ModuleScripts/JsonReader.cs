@@ -28,9 +28,18 @@ public class JsonReader {
         string raw = "";
         UnityWebRequest request = UnityWebRequest.Get("https://ktane.timwi.de/json/raw");
         stopWatch.Start();
-
-        //Waits until the web request returns the JSON file.
-        yield return request.SendWebRequest();
+        request.SendWebRequest();
+        do
+        {
+            if (stopWatch.Elapsed.TotalSeconds >= maxJsonLoadTime)
+            {
+                UnityEngineDebug("JSON took too long to load. Using preloaded modules");
+                StopLoading();
+                break;
+            }
+            yield return null;
+        }
+        while (!request.isDone);
         //If an error occurs, we need to default to the hardcoded file.
         if (request.error != null)
         {
@@ -39,40 +48,31 @@ public class JsonReader {
         }
         else
         {
-            UnityEngineDebug("Gotten info!");
-            raw = request.downloadHandler.text;
             Success = stopWatch.Elapsed.TotalSeconds < maxJsonLoadTime;
 
             if (!Success)
             {
-                UnityEngineDebug("JSON took to long to load. Using preloaded modules");
+                UnityEngineDebug("JSON took too long to load. Using preloaded modules");
                 StopLoading();
                 yield break;
             }
+
+            UnityEngineDebug("Gotten info!");
+            raw = request.downloadHandler.text;
 
             //Turns the raw JSON into an instance of the container class, which contains a List of Dictionaries.
             List<KtaneModule> modData = RepoJSONParser.ParseRaw(raw);
             modData = RandomizeList(modData);
             LoadedModules = new List<MakerModule>();
 
-            int count = 0;
-
             foreach (KtaneModule module in modData)
             {
-                if (module.Type != "Regular" && module.Type != "Needy" || module.Contributors == null)
+                if (module.Type != "Regular" || module.Contributors == null)
                 {
                     continue;
                 }
 
-                List<string> creators = new List<string>();
-                if (module.Contributors.Developer != null)
-                {
-                    creators.AddRange(module.Contributors.Developer);
-                }
-                if (module.Contributors.Manual != null)
-                {
-                    creators.AddRange(module.Contributors.Manual);
-                }
+                List<string> creators = module.Contributors.GetContributors();
 
                 if(creators.Count == 0 || creators.Any(creator => bannedCreators.Contains(creator))) 
                 {
@@ -81,13 +81,12 @@ public class JsonReader {
                 UnityWebRequest www = UnityWebRequestTexture.GetTexture($"https://ktane.timwi.de/Icons/{module.Name}.png");
 
                 yield return www.SendWebRequest();
+
                 if(!www.isNetworkError && !www.isHttpError)
                 {
                     Texture2D loadedTexture = DownloadHandlerTexture.GetContent(www);
                     Sprite sprite = Sprite.Create(loadedTexture, new Rect(0, 0, loadedTexture.width, loadedTexture.height), new Vector2(0.5f, 0.5f));
                     LoadedModules.Add(new MakerModule(module.Name, creators.ToArray(), sprite));
-                    UnityEngineDebug($"Loaded {module.Name}");
-                    count++;
                 }
 
                 if (stopWatch.Elapsed.TotalSeconds >= maxTime)
@@ -98,6 +97,7 @@ public class JsonReader {
 
         }
 
+        LoadedModules = LoadedModules.OrderBy(module => module.ModuleName).ToList();
         StopLoading();
     }
 
