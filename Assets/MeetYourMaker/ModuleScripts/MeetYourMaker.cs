@@ -1,9 +1,8 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MeetYourMaker : MonoBehaviour {
    static int ModuleIdCounter = 1;
@@ -43,9 +42,9 @@ public class MeetYourMaker : MonoBehaviour {
        for (int i = 1; i < 5; i++)
        {
            int dummy = i;
-           Transform transform = this.transform.Find($"Button {dummy}");
-           KMSelectable selectable = transform.GetComponent<KMSelectable>();
-           buttons[dummy - 1] = new Button(selectable, transform.Find("Text").GetComponent<TextMesh>());
+           KMSelectable selectable = transform.Find($"Button {dummy}").GetComponent<KMSelectable>();
+            Text text = transform.Find($"Button {dummy}/Canvas/Text").GetComponent<Text>();
+           buttons[dummy - 1] = new Button(selectable, text);
            selectable.OnInteract += delegate () { ButtonPress(buttons[dummy - 1]); return false; };
        }
    }
@@ -63,7 +62,7 @@ public class MeetYourMaker : MonoBehaviour {
        icon.sprite = blankIcon;
        foreach (Button button in buttons)
        {
-            button.ChangeText("");
+            button.Text.text = "";
        }
    }
    private void Logging(string message)
@@ -124,9 +123,9 @@ public class MeetYourMaker : MonoBehaviour {
     private void ButtonPress(Button button)
     {
         if (!needyActive) return;
-        if (button.Text != correctAnswer)
+        if (button.Text.text != correctAnswer)
         {
-            Strike($"You pressed {button.Text}.");
+            Strike($"You pressed {button.Text.text}.");
         }
 
         OnNeedyDeactivation();
@@ -149,7 +148,7 @@ public class MeetYourMaker : MonoBehaviour {
 
         for(int i = 0; i < 4; i++)
         {
-            buttons[i].ChangeText(answers[i]);
+            buttons[i].Text.text = answers[i];
         }
 
         Logging($"Module is {selectedModule.ModuleName}. Correct answer is {correctAnswer}");
@@ -555,8 +554,7 @@ public class MeetYourMaker : MonoBehaviour {
         while (true)
         {
             while(!needyActive) yield return null;
-            Button correctButton = buttons.First(button => button.Text == correctAnswer);
-            correctButton.Selectable.OnInteract();
+            buttons.First(button => button.Text.text == correctAnswer).Selectable.OnInteract();
         }
     }
 }
