@@ -12,13 +12,14 @@ using UnityEngine.Networking;
 
 public class JsonReader {
 
-	public static bool Success;
+    public static bool Success;
     public static bool LoadingDone;
     public static bool Loading;
     private const int maxJsonLoadTime = 10; //the max time allowed to laod the json
     private const int maxTime = 25; //the time allowed to load as many modules as possible
     public static List<MakerModule> LoadedModules;
     private static Stopwatch stopWatch = new Stopwatch();
+    private static string[] bannedCreators = new string[]{ "Anonymous" };
 
 
     public static IEnumerator LoadData()
@@ -66,22 +67,14 @@ public class JsonReader {
                 List<string> creators = new List<string>();
                 if (module.Contributors.Developer != null)
                 {
-                    if (module.Contributors.Developer.Contains("Anonymous"))
-                    {
-                        continue;
-                    }
                     creators.AddRange(module.Contributors.Developer);
                 }
                 if (module.Contributors.Manual != null)
                 {
-                    if (module.Contributors.Developer.Contains("Anonymous"))
-                    {
-                        continue;
-                    }
                     creators.AddRange(module.Contributors.Manual);
                 }
 
-                if(creators.Count == 0) 
+                if(creators.Count == 0 || creators.Any(creator => bannedCreators.Contains(creator))) 
                 {
                     continue;
                 }
