@@ -15,14 +15,18 @@ public class JsonReader {
 	public static bool Success;
     public static bool LoadingDone;
     public static bool Loading;
+    private const int maxJsonLoadTime = 10; //the max time allowed to laod the json
     private const int maxTime = 25; //the time allowed to load as many modules as possible
     public static List<MakerModule> LoadedModules;
+    private static Stopwatch stopWatch = new Stopwatch();
+
 
     public static IEnumerator LoadData()
     {
         //Stores the raw text of the grabbed json.
         string raw = "";
         UnityWebRequest request = UnityWebRequest.Get("https://ktane.timwi.de/json/raw");
+        stopWatch.Start();
 
         //Waits until the web request returns the JSON file.
         yield return request.SendWebRequest();
@@ -36,7 +40,14 @@ public class JsonReader {
         {
             UnityEngineDebug("Gotten info!");
             raw = request.downloadHandler.text;
-            Success = true;
+            Success = stopWatch.Elapsed.TotalSeconds < maxJsonLoadTime;
+
+            if (!Success)
+            {
+                UnityEngineDebug("JSON took to long to load. Using preloaded modules");
+                StopLoading();
+                yield break;
+            }
 
             //Turns the raw JSON into an instance of the container class, which contains a List of Dictionaries.
             List<KtaneModule> modData = RepoJSONParser.ParseRaw(raw);
@@ -44,11 +55,9 @@ public class JsonReader {
             LoadedModules = new List<MakerModule>();
 
             int count = 0;
-            Stopwatch stopWatch = new Stopwatch();
 
             foreach (KtaneModule module in modData)
             {
-                stopWatch.Start();
                 if (module.Type != "Regular" && module.Type != "Needy" || module.Contributors == null)
                 {
                     continue;
@@ -97,8 +106,14 @@ public class JsonReader {
 
         }
 
+        StopLoading();
+    }
+
+    private static void StopLoading()
+    {
         Loading = false;
-        LoadingDone = true;
+        LoadingDone = false;
+        stopWatch.Stop();
     }
     private static List<KtaneModule> RandomizeList(List<KtaneModule> orgininal)
     {

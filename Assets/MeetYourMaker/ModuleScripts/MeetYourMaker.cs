@@ -168,7 +168,6 @@ public class MeetYourMaker : MonoBehaviour {
     private void LoadPreloadedModules()
     {
         MakerModule.PreloadedIcons = preloadedIcons;
-        MakerModule.UsePreloadedIcons = true;
         modules.Add(new MakerModule("3D Maze", new string[] { "Spare Wizard" }));
         modules.Add(new MakerModule("3D Tunnels", new string[] { "Groover", "Timwi" }));
         modules.Add(new MakerModule("101 Dalmatians", new string[] { "Timwi" }));
