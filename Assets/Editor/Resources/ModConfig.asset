@@ -14,7 +14,7 @@ MonoBehaviour:
   id: MeetYourMaker
   title: Meet Your Maker
   author: 
-  description: 
+  description: Select the creator of the solvable module that appears.
   version: 
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 1029075bdf64af84d9ea535bb8875713, type: 3}
