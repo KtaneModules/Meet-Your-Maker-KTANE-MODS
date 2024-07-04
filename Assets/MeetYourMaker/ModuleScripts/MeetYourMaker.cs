@@ -342,7 +342,7 @@ public class MeetYourMaker : MonoBehaviour {
         modules.Add(new MakerModule("Modules Against Humanity", new string[] { "Flamanis", "catnip" }));
         modules.Add(new MakerModule("Modulo", new string[] { "Royal_Flu$h" }));
         modules.Add(new MakerModule("Monsplode Trading Cards", new string[] { "clutterArranger", "Grybo" }));
-        modules.Add(new MakerModule("Monsplode, Fight!", new string[] { "lutterArranger" }));
+        modules.Add(new MakerModule("Monsplode, Fight!", new string[] { "clutterArranger" }));
         modules.Add(new MakerModule("Morse Buttons", new string[] { "TheThirdMan" }));
         modules.Add(new MakerModule("Morse War", new string[] { "Brandon", "Flamanis" }));
         modules.Add(new MakerModule("Morse-A-Maze", new string[] { "CaitSith2" }));
