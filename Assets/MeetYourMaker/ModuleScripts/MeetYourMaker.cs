@@ -47,6 +47,11 @@ public class MeetYourMaker : MonoBehaviour {
        }
    }
    protected void OnNeedyActivation () { //Shit that happens when a needy turns on.
+        if (modules == null || modules.Count == 0)
+        {
+            OnNeedyDeactivation();
+            return;
+        }
         GenrateQuestion();
         needyActive = true;
    }
@@ -113,10 +118,9 @@ public class MeetYourMaker : MonoBehaviour {
         foreach (MakerModule module in modules)
         {
             allCreators.AddRange(module.Creators);
-            allCreators = allCreators.Distinct().ToList();
         }
 
-        //longest name: thestorebrandslimshady
+        allCreators = allCreators.Distinct().ToList();
     }
     private void ButtonPress(Button button)
     {
