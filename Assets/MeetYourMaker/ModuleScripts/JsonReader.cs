@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Security.Policy;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -15,8 +12,8 @@ public class JsonReader : MonoBehaviour {
     public static bool Success;
     public static bool LoadingDone;
     public static bool Loading;
-    private const int maxJsonLoadTime = 10; //the max time allowed to laod the json
     private const int maxTime = 25; //the time allowed to load as many modules as possible
+    private const float maxJsonLoadTimePercentage = .4f; //the percentage of maxLoadingTime the mod is allowed to take to load the json
     public static List<MakerModule> LoadedModules;
     private Stopwatch stopWatch = new Stopwatch();
     private static string[] bannedCreators = new string[]{ "Anonymous", "and many contributors" };
@@ -25,6 +22,7 @@ public class JsonReader : MonoBehaviour {
 
     public IEnumerator LoadData(int moduleId)
     {
+        const float jsonLoadTime = maxTime * maxJsonLoadTimePercentage;
         this.ModuleId = moduleId;
         //Stores the raw text of the grabbed json.
         string raw = "";
@@ -33,7 +31,7 @@ public class JsonReader : MonoBehaviour {
         request.SendWebRequest();
         do
         {
-            if (stopWatch.Elapsed.TotalSeconds >= maxJsonLoadTime)
+            if (stopWatch.Elapsed.TotalSeconds >= jsonLoadTime)
             {
                 UnityEngineDebug("JSON took too long to load. Using preloaded modules");
                 StopLoading();
@@ -50,11 +48,9 @@ public class JsonReader : MonoBehaviour {
         }
         else
         {
-            Success = stopWatch.Elapsed.TotalSeconds < maxJsonLoadTime;
-
+            Success = stopWatch.Elapsed.TotalSeconds < jsonLoadTime;
             if (!Success)
             {
-                UnityEngineDebug("JSON took too long to load. Using preloaded modules");
                 StopLoading();
                 yield break;
             }
@@ -66,17 +62,17 @@ public class JsonReader : MonoBehaviour {
             List<KtaneModule> modData = RepoJSONParser.ParseRaw(raw);
             modData = RandomizeList(modData);
             LoadedModules = new List<MakerModule>();
-
             foreach (KtaneModule module in modData)
             {
-                if (module.Type != "Regular" || module.Contributors == null)
+                if (module.Type != "Regular")
                 {
                     continue;
                 }
 
-                List<string> creators = module.Contributors.GetContributors();
+                List<string> creators = module.Contributors != null ? module.Contributors.GetContributors() : module.Author.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                creators = creators.Where(c => !bannedCreators.Contains(c)).ToList();
 
-                if(creators.Count == 0 || creators.Any(creator => bannedCreators.Contains(creator))) 
+                if(creators.Count == 0) 
                 {
                     continue;
                 }
@@ -87,6 +83,7 @@ public class JsonReader : MonoBehaviour {
                 if(!www.isNetworkError && !www.isHttpError)
                 {
                     Texture2D loadedTexture = DownloadHandlerTexture.GetContent(www);
+                    loadedTexture.filterMode = FilterMode.Point;
                     Sprite sprite = Sprite.Create(loadedTexture, new Rect(0, 0, loadedTexture.width, loadedTexture.height), new Vector2(0.5f, 0.5f));
                     LoadedModules.Add(new MakerModule(module.Name, creators.ToArray(), sprite));
                 }
@@ -96,10 +93,8 @@ public class JsonReader : MonoBehaviour {
                     break;
                 }
             }
-
+            LoadedModules = LoadedModules.OrderBy(module => module.ModuleName).ToList();
         }
-
-        LoadedModules = LoadedModules.OrderBy(module => module.ModuleName).ToList();
         StopLoading();
     }
 

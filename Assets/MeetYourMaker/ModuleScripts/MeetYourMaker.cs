@@ -125,7 +125,7 @@ public class MeetYourMaker : MonoBehaviour {
     private void ButtonPress(Button button)
     {
         button.Selectable.AddInteractionPunch(1f);
-        if (!needyActive) return;
+        if (!needyActive || button.Text.text == "") return;
         if (button.Text.text != correctAnswer)
         {
             Strike($"You pressed {button.Text.text}.");
@@ -148,8 +148,11 @@ public class MeetYourMaker : MonoBehaviour {
         answers.AddRange(allCreators.Where(creator => !selectedModule.Creators.Contains(creator)).Take(3));
         answers = RandomizeList(answers);
 
+
         for(int i = 0; i < 4; i++)
         {
+            if(i == answers.Count)
+                break;
             buttons[i].Text.text = answers[i];
         }
 
